@@ -18,10 +18,10 @@ class Party(models.Model):
     party_type = models.CharField(max_length='20', blank=True)
     
     def __unicode__(self):
-        if self.party_type == 'company':
-            return self.company.__unicode__()
-        elif self.party_type == 'person':
-            return self.person.__unicode__()
+        #Возвращаем __unicode__ потомка
+        party = getattr(self, self.party_type)
+        return party.__unicode__()
+
 #class Party
 
 class Company(Party):
@@ -60,22 +60,6 @@ class Person(Party):
 #    communication = models.CharField(max_length=80)
     
 #class Communication
-
-#class Interaction(models.Model):
-#    party = models.ForeignKey(Party)
-#    task = models.CharField(max_length=250)
-#    interaction_type = models.CharField(max_length=20, choices=INTERACTION_TYPE)
-#    created_by = models.ForeignKey(User)
-#    created_date = models.DateField(auto_now_add=True)
-#    interaction_date = models.DateField()
-#    note = models.TextField()
-#    
-#    def __unicode__(self):
-#        return "%s %s %s" % (self.interaction_type, self.created_date,  self.party)
-#    
-#    class Meta:
-#        ordering = ['-interaction_date']
-##class Interaction
 #-------------------------------------------------------------------------------
 
 
@@ -90,10 +74,9 @@ class Interaction(models.Model):
         ordering = ['-interaction_date']
         
     def __unicode__(self):
-        if self.interaction_type == 'note':
-            return self.note.__unicode__()
-        elif self.interaction_type == 'task':
-            return self.task.__unicode__()
+        #Возвращаем __unicode__ потомка
+        interaction = getattr(self, self.interaction_type)
+        return interaction.__unicode__()
 
 #class Interaction
 
@@ -115,7 +98,7 @@ class Task(Interaction):
     status = models.IntegerField(default=1)
 
     def __unicode__(self):
-        return "%s %s" % (self.interaction_date, self.task_name)
+        return "%s %s" % (self.interaction_date, self.title)
     
     def save(self, *args, **kwargs):
         self.interaction_type = 'task'
