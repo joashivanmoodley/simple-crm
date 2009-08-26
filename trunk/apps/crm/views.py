@@ -81,7 +81,7 @@ def add_party(request, form_class, party_type):
 def edit_party(request, party_id):
     #Получаем объект
     party = get_object_or_404(Party, id=party_id)
-    party = getattr(party, "%s" % party.party_type)
+    party = getattr(party, party.party_type)
     
     if request.method == 'POST':
         
@@ -178,7 +178,7 @@ def edit_interaction(request, int_id, form_class):
     i = get_object_or_404(Interaction, id=int_id)    
     #Получаем доступ к объекту-потомку Interaction, это или Note или Task
     # i.note, i.task
-    i = getattr(i, "%s" % i.interaction_type)
+    i = getattr(i, i.interaction_type)
     
     if request.method == 'POST':
         form = form_class(request.POST)
