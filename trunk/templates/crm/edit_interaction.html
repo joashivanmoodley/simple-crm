@@ -1,0 +1,29 @@
+{% extends "crm/party_page.html" %}
+{% block title %}{{ party }}{% endblock %}
+{% block extra_media %}{{ form.media }}{% endblock %}
+{% block main %}
+<div id="party">
+    <div class="avatar">
+        <img src="/site-media/images/icons/person.gif" />
+    </div>
+    
+    <div class="info">
+        <h2>{{ party }}</h2>    
+    </div>
+    <div class="clear">
+        
+    </div>
+</div>  
+<div id="add-interaction-wrapper">
+    <script type="text/javascript"> 
+    $(document).ready(function(){
+            $('#id_interaction_date').attachDatepicker(
+                            {showOn:'both',
+                            buttonImage:'{{ MEDIA_URL }}images/calendar.gif',
+                            buttonImageOnly:true});	
+    });
+    </script>
+    {% ifequal int_type 'note' %}{% include "crm/note_form.html" %}{% endifequal %}
+    {% ifequal int_type 'task' %}{% include "crm/task_form.html" %}{% endifequal %}
+</div>
+{% endblock %}

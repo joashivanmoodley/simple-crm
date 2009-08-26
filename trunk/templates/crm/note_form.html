@@ -1,0 +1,29 @@
+<div class="form-errors">
+    {% if form.note_text.errors %}Введите текст заметки<br/>{% endif %}
+    {% if form.interaction_date.errors %}Введите дату в формате yyyy-mm-dd<br />{% endif %}
+</div>
+<form id="add-note-form" action="{% if interaction %}{% url edit_note int_id=interaction.id %}{% else %}{% url add_note party_id=party.id %}{% endif %}" method="POST">
+<table>
+    <tbody>
+        <tr>
+            <td colspan="2">
+                <label class="req" for="id_note">Заметка</label>
+                <br />
+                {{ form.note_text }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="req" for="id_interaction_date">Дата события</label><br />
+                {{ form.interaction_date }}
+            </td>
+            <td>
+                <div class="submit right">
+                    <button class="btn" type="submit"><span><span>Сохранить</span></span></button>
+                    или <a class="cancel" href="{% url party party_id=party.id %}">Отменить</a>        
+                </div>                
+            </td>
+        </tr>
+    </tbody>
+</table>
+</form>

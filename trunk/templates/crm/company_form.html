@@ -1,0 +1,35 @@
+<form id="party-form" method="POST">
+<table>
+    <tbody>
+        <tr>
+            <td class="icon">
+                <img src="{{ MEDIA_URL }}images/icons/company.gif" />
+            </td>
+            <td>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><label class="req" for="id_fname">Название</label></td>
+                            <td>{{ form.name }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <label for="id_fname">Дополнительная информация</label><br />
+                                {{ form.background_info }}
+                            </td>                        
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div class="submit">
+                                    <button class="btn" type="submit"><span><span>Сохранить</span></span></button>
+                                    или <a class="cancel" href="{% if add %}{% url parties %}{% else %}{% url party party_id=party.id %}{% endif %}">Отменить</a>        
+                                </div>                
+                            </td>
+                        </tr>    
+                       </tbody>
+                </table>            
+            </td>
+        </tr>
+    </tbody>
+</table> 
+</form>

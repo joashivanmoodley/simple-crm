@@ -1,0 +1,17 @@
+{% extends "crm/party_page.html" %}
+{% block title %}{{ party }}{% endblock %}
+{% block main %}
+<div class="party-wrapper">
+    <div id="add-party-wrapper">
+        {% ifequal party_type 'person' %}
+            <h1>{% if add %}Добавить нового человека{% else %}Изменить описание человека{% endif %}</h1>
+            {% include "crm/person_form.html" %}
+        {% endifequal %}
+        {% ifequal party_type 'company' %}
+            <h1>{% if add %}Добавить новую компанию{% else %}Изменить описание компании{% endif %}</h1>
+            {% include "crm/company_form.html" %}
+        {% endifequal %}
+    </div>
+</div>  
+{% endblock %}
+{% block sidebar %}{% endblock %}
