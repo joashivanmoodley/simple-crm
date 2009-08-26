@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load custom_filters %}
+{% block title %}{{ party }}{% endblock %}
+{% block main_nav %}
+<ul id="main-nav">
+    <li><a href="{% url main_page %}">Главная</a></li>
+    <li><a href="{% url parties %}">Контакты</a></li>
+    <li class="with-space"><a href="">Задачи</a></li>
+    <li class="current"><a href="">{{ party|truncatestring:9 }}</a></li>
+</ul>
+{% endblock %}
+{% block main %}
+    <div id="party">
+        <div class="avatar">
+            <img src="/site-media/images/icons/person.gif" />
+        </div>
+        <div class="info">
+            <h2>{{ party }}</h2>    
+        </div>
+        <div class="right">
+            <a class="edit" href="{% url edit_party party_id=party.id %}">Изменить</a>
+        </div>
+        <div class="clear"></div>
+        <div id="interaction-controls">                
+            <a class="btn" href="{% url add_note party_id=party.id %}"><span><span>Добавить заметку</span></span></a>
+            <a class="btn" href="{% url add_task party_id=party.id %}"><span><span>Добавить задачу</span></span></a>
+        </div>
+    </div>        
+    <div id="interactions">
+        <ul>
+            {% for task in tasks %}
+            <li>
+                <div class="task-wrapper {% ifequal task.status 2 %}completed{% endifequal %}">
+                    <div class="checkbox">
+                        <input type="checkbox" {% ifequal task.status 2 %}checked disabled{% endifequal %} />
+                    </div>
+                    <div class="task-body">
+                        <strong>{{ task.interaction_date|date:"d M Y" }}</strong> &mdash; {{ task.title }}
+                    </div>
+                {% ifequal task.status 1 %}<a class="edit" href="{% url complete_task task.id %}">завершить</{% endifequal %}
+                 <a class="edit" href="{% url edit_task int_id=task.id %}">изменить</a>
+                <a href="javascript:if(confirm('Удалить задачу?')) location.href='{% url delete_task task.id %}'" >удалить</a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>           
+        <ul>
+            {% for note in notes %}
+            <li>
+                <div class="interaction-wrapper">
+                    <div class="permalink">
+                        <strong>{{ note.interaction_date|date:"d M Y" }}</strong>
+                        <a class="edit" href="{% url edit_note int_id=note.id%}">изменить</a>
+                        <a href="javascript:if(confirm('Удалить заметку?')) location.href='{% url delete_note note.id %}'" >удалить</a>
+                    </div>
+                    <div class="interaction-body">
+                        {{ note.note_text|linebreaks }}    
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>           
+    </div>
+{% endblock %}
+
+{% block sidebar %}
+<div>
+    <a class="delete" href="javascript:if(confirm('Удалить контакт?')) location.href='{% url delete_party party.id %}'">Удалить этот контакт</a>
+</div>
+{% endblock %}

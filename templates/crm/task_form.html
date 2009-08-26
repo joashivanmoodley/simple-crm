@@ -1,0 +1,36 @@
+<div class="form-errors">
+    {% if form.title.errors %}Введите название задачи<br/>{% endif %}
+    {% if form.interaction_date.errors %}Введите дату в формате yyyy-mm-dd<br />{% endif %}
+</div>
+<form id="task-form" method="POST">
+<table>
+    <tbody>
+        <tr>
+            <td colspan="2">
+                <label class="req" for="id_task">Название задачи</label>
+                <br />
+                {{ form.title }}
+            </td>            
+        </tr>
+        <tr>
+            <td colspan="2">
+                <label for="id_note">Описание задачи (не обязательно)</label>
+                <br />
+                {{ form.note_text }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="req" for="id_interaction_date">Дата задачи</label><br />
+                {{ form.interaction_date }}
+            </td>
+            <td>
+                <div class="submit right">
+                    <button class="btn" type="submit"><span><span>Сохранить</span></span></button>
+                    или <a class="cancel" href="{% url party party_id=party.id %}">Отменить</a>        
+                </div>                
+            </td>
+        </tr>
+    </tbody>
+</table>
+</form>

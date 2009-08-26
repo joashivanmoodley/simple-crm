@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Контакты{% endblock %}
+{% block main_nav %}
+<ul id="main-nav">
+    <li><a href="{% url main_page %}">Главная</a></li>
+    <li class="current"><a href="">Контакты</a></li>
+    <li><a href="">Задачи</a></li>
+</ul>
+{% endblock %}
+{% block main %}    
+<ul id="parties-list">
+    {% for party in parties %}
+    <li>
+    <div class="party-wrapper">
+        <div class="avatar">
+            <a href="{% url party party_id=party.id %}">
+                <img height="32" width="32" src="{{ MEDIA_URL }}images/icons/person.gif" />
+            </a>
+        </div>
+        
+        <div class="info">
+            <h3><a href="{% url party party_id=party.id %}">{{ party }}</a></h3>    
+        </div>
+        <div class="clear">
+            
+        </div>
+    </div>
+    {% endfor %}
+    </li>
+</ul>
+{% endblock %}
+{% block sidebar %}
+    <div class="button-wrapper clear">
+        <a class="btn" href="{% url add_person %}"><span><span>Добавить человека</span></span></a>
+    </div>
+    
+    <div class="button-wrapper clear">
+        <a class="btn" href="{% url add_company %}"><span><span>Добавить компанию</span></span></a>
+    </div>
+{% endblock %}
