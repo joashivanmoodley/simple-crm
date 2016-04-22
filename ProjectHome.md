@@ -1,0 +1,1 @@
+Simple django based crm inspired by Highrise App of http://37signals.com/
